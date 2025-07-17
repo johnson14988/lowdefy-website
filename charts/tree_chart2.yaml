@@ -1,0 +1,40 @@
+id: tree_chart_card2
+type: Card
+properties:
+  hoverable: true
+  title: A Tree Chart
+layout:
+  span: 24
+blocks:
+  - id: tree_chart2
+    type: EChart
+    properties:
+      option:
+        tooltip:
+          trigger: item
+          triggerOn: mousemove
+        series:
+          - type: tree
+            data:
+              - _json.parse: '{"name":"mathematics","children":[{"name":"analysis","children":[{"name":"real analysis"},{"name":"complex analysis"},{"name":"harmonic analysis"},{"name":"functional analysis"}]},{"name":"algebra","children":[{"name":"abstract algebra"},{"name":"linear algebra"}]},{"name":"topology","children":[{"name":"general topology"},{"name":"differential topology"}]}]}'
+            top: 10%
+            left: 20%
+            bottom: 10%
+            right: 20%
+            symbolSize: 10
+            label:
+              position: left
+              verticalAlign: middle
+              align: right
+              fontSize: 14
+            leaves:
+              label:
+                position: right
+                verticalAlign: middle
+                align: left
+            emphasis:
+              focus: descendant
+            expandAndCollapse: true
+            animationDuration: 550
+            animationDurationUpdate: 750
+      height: 500

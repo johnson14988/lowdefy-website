@@ -1,0 +1,50 @@
+id: pie_chart_card
+type: Card
+properties:
+  hoverable: true
+  title: A Pie Chart
+layout:
+  span: 8
+blocks:
+  - id: pie_chart
+    type: EChart
+    properties:
+      option:
+        tooltip:
+          trigger: item
+        legend:
+          top: '3%'
+          left: center
+        series:
+          - name: BT Level
+            type: pie
+            radius:
+              - '40%'
+              - '70%'
+            avoidLabelOverlap: true
+            padAngle: 6
+            itemStyle:
+              borderRadius: 10
+            label:
+              show: false
+              position: center
+            emphasis:
+              label:
+                show: true
+                fontSize: 16
+                fontWeight: bold
+            labelLine:
+              show: false
+            data:
+              - value: 10
+                name: Lv1
+              - value: 12
+                name: Lv2
+              - value: 20
+                name: Lv3
+              - value: 8
+                name: Lv4
+              - value: 16
+                name: Lv5
+              - value: 8
+                name: Lv6

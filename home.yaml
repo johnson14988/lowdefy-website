@@ -1,0 +1,19 @@
+id: home
+type: PageHeaderMenu
+properties:
+  title: Home
+areas:
+  header:
+    blocks:
+      - id: user_avatar
+        type: Avatar
+        properties:
+          content: HJH
+          color: "#acede3"
+          size: large
+
+  content:
+    justify: center
+    blocks:
+      - id: content_card
+        type: Card

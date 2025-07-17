@@ -1,0 +1,11 @@
+id:
+  _var: id
+type: MongoDBCollection
+properties:
+  databaseUri:
+    _string.concat:
+      - mongodb+srv://consjhon900:han123456@devcluster.rctcbzr.mongodb.net/
+      - _var: databaseName
+  collection:
+    _var: collection
+  write: true

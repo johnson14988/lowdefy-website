@@ -2,13 +2,11 @@ id: dashboard
 type: PageHeaderMenu
 properties:
   title: Dashboard
-layout:
-  contentGutter: 28
 
 requests:
   - id: get_tasks
     type: MongoDBFind
-    connectionId: mongo_task
+    connectionId: record_task
     properties:
       query: {}
       projection:
@@ -18,7 +16,7 @@ requests:
         priority: 1
   - id: get_BT_entries
     type: MongoDBFind
-    connectionId: mongo_testBT
+    connectionId: testBT_test1
     properties:
       query: {}
       projection:
@@ -73,165 +71,37 @@ blocks:
             properties:
               title: Scores
             layout:
-              span: 12
+              span: 6
               contentJustify: center
             blocks:
-              - id: defaultid
-                type: DateSelector
-                layout:
-                  span: 12
-                properties:
-                  disabledDates:
-                    min:
-                      ~d: 2025-07-15T00:00:00.000Z
-                    max:
-                      _date.now: true
-                    dates: []
-                    ranges: []
-                  label:
-                    disabled: true
-                  placeholder: Select a date to query
+              - _ref:
+                  path: date_selector.yaml
+                  vars:
+                    id: score_date
 
       chart_tab:
         blocks:
-          - id: wrapper
+          - id: row1
             type: Box
             layout:
-              contentGutter: 28
+              contentGutter: 24
             blocks:
-              - id: line_chart_card
-                type: Card
-                properties:
-                  hoverable: true
-                  title: A Line Chart
-                style:
-                  maxWidth: 400
-                blocks:
-                  - id: line_chart
-                    type: EChart
-                    properties:
-                      option:
-                        xAxis:
-                          type: category
-                          data:
-                            - Mon
-                            - Tue
-                            - Wed
-                            - Thu
-                            - Fri
-                            - Sat
-                            - Sun
-                        yAxis:
-                          type: value
-                        series:
-                          - type: line
-                            smooth: true
-                            data:
-                              - 820
-                              - 932
-                              - 901
-                              - 934
-                              - 1290
-                              - 1330
-                              - 1320
-                      width: 300
-                      height: 400
-              - id: tree_chart_card
-                type: Card
-                properties:
-                  hoverable: true
-                  title: A Tree Chart
-                style:
-                  maxWidth: 400
-                  borderRadius: 100
-                blocks:
-                  - id: tree_chart
-                    type: EChart
-                    properties:
-                      option:
-                        tooltip:
-                          trigger: item
-                          triggerOn: mousemove
-                        series:
-                          - type: tree
-                            data:
-                              - name: mathematics
-                                children:
-                                  - name: analysis
-                                  - name: algebra
-                                  - name: topology
-                            top: 20%
-                            left: 30%
-                            bottom: 20%
-                            right: 30%
-                            symbolSize: 7
-                            label:
-                              position: left
-                              verticalAlign: middle
-                              align: right
-                              fontSize: 9
-                            leaves:
-                              label:
-                                position: right
-                                verticalAlign: middle
-                                align: left
-                            emphasis:
-                              focus: descendant
-                            expandAndCollapse: true
-                            animationDuration: 550
-                            animationDurationUpdate: 750
-                      width: 300
-                      height: 400
-              - id: pie_chart_card
-                type: Card
-                properties:
-                  hoverable: true
-                  title: A Pie Chart
-                style:
-                  maxWidth: 400
-                blocks:
-                  - id: pie_chart
-                    type: EChart
-                    properties:
-                      option:
-                        tooltip:
-                          trigger: item
-                        legend:
-                          top: '5%'
-                          left: center
-                        series:
-                          - name: Access From
-                            type: pie
-                            radius:
-                              - '40%'
-                              - '70%'
-                            avoidLabelOverlap: false
-                            padAngle: 5
-                            itemStyle:
-                              borderRadius: 10
-                            label:
-                              show: false
-                              position: center
-                            emphasis:
-                              label:
-                                show: true
-                                fontSize: 20
-                                fontWeight: bold
-                            labelLine:
-                              show: false
-                            data:
-                              - value: 1048
-                                name: Search Engine
-                              - value: 735
-                                name: Direct
-                              - value: 580
-                                name: Email
-                              - value: 484
-                                name: Union Ads
-                              - value: 300
-                                name: Video Ads
-                      width: 300
-                      height: 400
+              - _ref: charts/line_chart1.yaml
+              - _ref: charts/pie_chart1.yaml
+
+          - id: divider1
+            type: Divider
+
+          - id: row2
+            type: Box
+            blocks:
+              - _ref: charts/tree_chart1.yaml
+
+          - id: row3
+            type: Box
+            blocks:
+              - _ref: charts/tree_chart2.yaml
+
       task_tab:
         blocks:
           - id: task_wrapper

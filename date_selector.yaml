@@ -1,0 +1,16 @@
+id:
+  _var: id
+type: DateSelector
+layout:
+  span: 24
+properties:
+  disabledDates:
+    min:
+      ~d: 2025-07-15T00:00:00.000Z
+    max:
+      _date.now: true
+    dates: []
+    ranges: []
+  label:
+    disabled: true
+  placeholder: Select a date

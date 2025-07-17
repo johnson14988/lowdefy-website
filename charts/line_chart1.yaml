@@ -1,0 +1,35 @@
+id: line_chart_card
+type: Card
+properties:
+  hoverable: true
+  title: A Line Chart
+layout:
+  span: 8
+blocks:
+  - id: line_chart
+    type: EChart
+    properties:
+      option:
+        xAxis:
+          type: category
+          data:
+            - Mon
+            - Tue
+            - Wed
+            - Thu
+            - Fri
+            - Sat
+            - Sun
+        yAxis:
+          type: value
+        series:
+          - type: line
+            smooth: true
+            data:
+              - 820
+              - 932
+              - 901
+              - 934
+              - 1290
+              - 1330
+              - 1320

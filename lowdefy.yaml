@@ -3,33 +3,30 @@ lowdefy: 4.4.0
 name: Lowdefy starter
 
 connections:
-  - id: mongo_wiki
-    type: MongoDBCollection
-    properties:
-      databaseUri: mongodb+srv://consjhon900:han123456@devcluster.rctcbzr.mongodb.net/source
-      collection: wiki
-      write: true
-
-  - id: mongo_textbook
-    type: MongoDBCollection
-    properties:
-      databaseUri: mongodb+srv://consjhon900:han123456@devcluster.rctcbzr.mongodb.net/source
-      collection: textbook
-      write: true
-
-  - id: mongo_task
-    type: MongoDBCollection
-    properties:
-      databaseUri: mongodb+srv://consjhon900:han123456@devcluster.rctcbzr.mongodb.net/record
-      collection: task
-      write: true
-
-  - id: mongo_testBT
-    type: MongoDBCollection
-    properties:
-      databaseUri: mongodb+srv://consjhon900:han123456@devcluster.rctcbzr.mongodb.net/testBT
-      collection: test1
-      write: true
+  - _ref:
+      path: connections/mongo_connections.yaml
+      vars:
+        id: source_wiki
+        databaseName: source
+        collection: wiki
+  - _ref:
+      path: connections/mongo_connections.yaml
+      vars:
+        id: source_textbook
+        databaseName: source
+        collection: textbook
+  - _ref:
+      path: connections/mongo_connections.yaml
+      vars:
+        id: record_task
+        databaseName: record
+        collection: task
+  - _ref:
+      path: connections/mongo_connections.yaml
+      vars:
+        id: testBT_test1
+        databaseName: testBT
+        collection: test1
 
   - id: my_api
     type: AxiosHttp
@@ -71,30 +68,12 @@ menus:
         pageId: new_entry
 
 pages:
+  - _ref: home.yaml
   - _ref: new_entry.yaml
   - _ref: dashboard.yaml
   - _ref: mongo.yaml
   - _ref: test.yaml
   - _ref: page404.yaml
-  - id: home
-    type: PageHeaderMenu
-    properties:
-      title: Home
-    areas:
-      header:
-        blocks:
-          - id: user_avatar
-            type: Avatar
-            properties:
-              content: HJH
-              color: "#acede3"
-              size: large
-
-      content:
-        justify: center
-        blocks:
-          - id: content_card
-            type: Card
 
 
 
