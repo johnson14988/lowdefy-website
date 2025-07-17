@@ -1,0 +1,100 @@
+
+lowdefy: 4.4.0
+name: Lowdefy starter
+
+connections:
+  - id: mongo_wiki
+    type: MongoDBCollection
+    properties:
+      databaseUri: mongodb+srv://consjhon900:han123456@devcluster.rctcbzr.mongodb.net/source
+      collection: wiki
+      write: true
+
+  - id: mongo_textbook
+    type: MongoDBCollection
+    properties:
+      databaseUri: mongodb+srv://consjhon900:han123456@devcluster.rctcbzr.mongodb.net/source
+      collection: textbook
+      write: true
+
+  - id: mongo_task
+    type: MongoDBCollection
+    properties:
+      databaseUri: mongodb+srv://consjhon900:han123456@devcluster.rctcbzr.mongodb.net/record
+      collection: task
+      write: true
+
+  - id: mongo_testBT
+    type: MongoDBCollection
+    properties:
+      databaseUri: mongodb+srv://consjhon900:han123456@devcluster.rctcbzr.mongodb.net/testBT
+      collection: test1
+      write: true
+
+  - id: my_api
+    type: AxiosHttp
+    properties:
+      baseURL: https://radiant-cove-14954-a1ca9b8d8036.herokuapp.com
+
+menus:
+  - id: default
+    links:
+      - id: home
+        type: MenuLink
+        properties:
+          icon: AiOutlineHome
+          title: Home
+        pageId: home
+      - id: mongo
+        type: MenuLink
+        properties:
+          icon: AiOutlineExperiment
+          title: Mongo
+        pageId: mongo
+      - id: test
+        type: MenuLink
+        properties:
+          icon: AiOutlineExperiment
+          title: Test Page
+        pageId: test
+      - id: dashboard
+        type: MenuLink
+        properties:
+          icon: AiOutlineExperiment
+          title: Dashboard
+        pageId: dashboard
+      - id: new_entry
+        type: MenuLink
+        properties:
+          icon: AlertOutlined
+          title: New Entry
+        pageId: new_entry
+
+pages:
+  - _ref: new_entry.yaml
+  - _ref: dashboard.yaml
+  - _ref: mongo.yaml
+  - _ref: test.yaml
+  - _ref: page404.yaml
+  - id: home
+    type: PageHeaderMenu
+    properties:
+      title: Home
+    areas:
+      header:
+        blocks:
+          - id: user_avatar
+            type: Avatar
+            properties:
+              content: HJH
+              color: "#acede3"
+              size: large
+
+      content:
+        justify: center
+        blocks:
+          - id: content_card
+            type: Card
+
+
+

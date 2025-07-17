@@ -1,0 +1,450 @@
+id: dashboard
+type: PageHeaderMenu
+properties:
+  title: Dashboard
+layout:
+  contentGutter: 28
+
+requests:
+  - id: get_tasks
+    type: MongoDBFind
+    connectionId: mongo_task
+    properties:
+      query: {}
+      projection:
+        _id: 0
+        task: 1
+        desc: 1
+        priority: 1
+  - id: get_BT_entries
+    type: MongoDBFind
+    connectionId: mongo_testBT
+    properties:
+      query: {}
+      projection:
+        _id: 0
+
+events:
+  onMount:
+    - id: get_tasks
+      type: Request
+      params: get_tasks
+    - id: get_BT_entries
+      type: Request
+      params: get_BT_entries
+
+blocks:
+  - id: default
+    type: Breadcrumb
+    properties:
+      separator: '>'
+      list:
+        - label: Home
+          pageId: home
+        - label: Dashboard
+          pageId: dashboard
+  - id: tabs
+    type: Tabs
+    properties:
+      defaultActiveKey: score_tab
+      size: small
+      tabPosition: left
+      tabs:
+        - key: score_tab
+          title: Scores
+          icon: AiOutlineExclamation
+        - key: chart_tab
+          title: Charts
+          icon: AiFillCamera
+        - key: task_tab
+          title: Tasks
+          icon: AiFillBell
+        - key: memo_tab
+          title: Memos
+          icon: AiFillBell
+        - key: record_tab
+          title: Records
+          icon: AiFillBell
+    areas:
+      score_tab:
+        blocks:
+          - id: score_wrapper
+            type: Card
+            properties:
+              title: Scores
+            layout:
+              span: 12
+              contentJustify: center
+            blocks:
+              - id: defaultid
+                type: DateSelector
+                layout:
+                  span: 12
+                properties:
+                  disabledDates:
+                    min:
+                      ~d: 2025-07-15T00:00:00.000Z
+                    max:
+                      _date.now: true
+                    dates: []
+                    ranges: []
+                  label:
+                    disabled: true
+                  placeholder: Select a date to query
+
+      chart_tab:
+        blocks:
+          - id: wrapper
+            type: Box
+            layout:
+              contentGutter: 28
+            blocks:
+              - id: line_chart_card
+                type: Card
+                properties:
+                  hoverable: true
+                  title: A Line Chart
+                style:
+                  maxWidth: 400
+                blocks:
+                  - id: line_chart
+                    type: EChart
+                    properties:
+                      option:
+                        xAxis:
+                          type: category
+                          data:
+                            - Mon
+                            - Tue
+                            - Wed
+                            - Thu
+                            - Fri
+                            - Sat
+                            - Sun
+                        yAxis:
+                          type: value
+                        series:
+                          - type: line
+                            smooth: true
+                            data:
+                              - 820
+                              - 932
+                              - 901
+                              - 934
+                              - 1290
+                              - 1330
+                              - 1320
+                      width: 300
+                      height: 400
+              - id: tree_chart_card
+                type: Card
+                properties:
+                  hoverable: true
+                  title: A Tree Chart
+                style:
+                  maxWidth: 400
+                  borderRadius: 100
+                blocks:
+                  - id: tree_chart
+                    type: EChart
+                    properties:
+                      option:
+                        tooltip:
+                          trigger: item
+                          triggerOn: mousemove
+                        series:
+                          - type: tree
+                            data:
+                              - name: mathematics
+                                children:
+                                  - name: analysis
+                                  - name: algebra
+                                  - name: topology
+                            top: 20%
+                            left: 30%
+                            bottom: 20%
+                            right: 30%
+                            symbolSize: 7
+                            label:
+                              position: left
+                              verticalAlign: middle
+                              align: right
+                              fontSize: 9
+                            leaves:
+                              label:
+                                position: right
+                                verticalAlign: middle
+                                align: left
+                            emphasis:
+                              focus: descendant
+                            expandAndCollapse: true
+                            animationDuration: 550
+                            animationDurationUpdate: 750
+                      width: 300
+                      height: 400
+              - id: pie_chart_card
+                type: Card
+                properties:
+                  hoverable: true
+                  title: A Pie Chart
+                style:
+                  maxWidth: 400
+                blocks:
+                  - id: pie_chart
+                    type: EChart
+                    properties:
+                      option:
+                        tooltip:
+                          trigger: item
+                        legend:
+                          top: '5%'
+                          left: center
+                        series:
+                          - name: Access From
+                            type: pie
+                            radius:
+                              - '40%'
+                              - '70%'
+                            avoidLabelOverlap: false
+                            padAngle: 5
+                            itemStyle:
+                              borderRadius: 10
+                            label:
+                              show: false
+                              position: center
+                            emphasis:
+                              label:
+                                show: true
+                                fontSize: 20
+                                fontWeight: bold
+                            labelLine:
+                              show: false
+                            data:
+                              - value: 1048
+                                name: Search Engine
+                              - value: 735
+                                name: Direct
+                              - value: 580
+                                name: Email
+                              - value: 484
+                                name: Union Ads
+                              - value: 300
+                                name: Video Ads
+                      width: 300
+                      height: 400
+      task_tab:
+        blocks:
+          - id: task_wrapper
+            type: Box
+            layout:
+              contentGutter: 20
+            blocks:
+              - id: task_card1
+                type: Card
+                properties:
+                  hoverable: true
+                  title: View Tasks
+                blocks:
+                  - id: task_table1
+                    type: AgGridBalham
+                    properties:
+                      enableCellTextSelection: true
+                      pagination: true
+                      rowData:
+                        _request: get_tasks
+                      defaultColDef:
+                        sortable: true
+                        resizable: true
+                        filter: true
+                      columnDefs:
+                        - headerName: Task
+                          field: task
+                          flex: 1
+                          filter: false
+                        - headerName: Description
+                          field: desc
+                          flex: 2
+                          filter: false
+                        - headerName: Priority
+                          field: priority
+                          flex: 1
+                          filter: false
+
+      memo_tab:
+        blocks:
+          - id: memo_wrapper
+            type: Box
+            layout:
+              contentGutter: 20
+            blocks:
+              - id: memo_card1
+                type: Card
+                properties:
+                  hoverable: true
+                  title: Memo 1
+                style:
+                  maxWidth: 300
+                blocks:
+                  - id: memo_content1
+                    type: Markdown
+                    properties:
+                      content: "**This is a markdown text.**"
+              - id: memo_card2
+                type: Card
+                properties:
+                  hoverable: true
+                  title: Memo 2
+                style:
+                  maxWidth: 300
+                blocks:
+                  - id: memo_content2
+                    type: Markdown
+                    properties:
+                      content: "**This is another markdown text.**"
+      record_tab:
+        blocks:
+          - id: block_id
+            type: Collapse
+            properties:
+              accordion: true
+              bordered: false
+              defaultActiveKey: panel1
+              panels:
+                - key: panel1
+                  extraKey: panel1Extra
+                  title: Info Sources
+                  disabled: false
+                - key: panel2
+                  title: BT Entries
+                  disabled: false
+                  extraKey: panel2Extra
+            areas:
+              panel1:
+                blocks:
+                  - id: source_record_wrapper
+                    type: Box
+                    layout:
+                      contentGutter: 20
+                    blocks:
+                      - id: source_selector
+                        type: Selector
+                        layout:
+                          span: 4
+                        properties:
+                          label:
+                            disabled: true
+                          options:
+                            - label: Textbook
+                              value: Textbook
+                            - label: Wikipage
+                              value: Wikipage
+                          placeholder: Select a source to view
+                        events:
+                          onChange:
+                            - id: set_source
+                              type: SetState
+                              params:
+                                source:
+                                  _state: source_selector
+
+                      - id: query_button
+                        type: Button
+                        layout:
+                          span: 3
+                        properties:
+                          color: "#ca7af0"
+                          shape: round
+                          title:
+                            _string.concat:
+                              - "Query: "
+                              - _state: source
+
+
+
+                      - id: souce_table
+                        type: AgGridBalham
+                        properties:
+                          enableCellTextSelection: true
+                          pagination: true
+                          rowData:
+                            _request: get_books
+                          defaultColDef:
+                            sortable: true
+                            resizable: true
+                            filter: true
+                          columnDefs:
+                            - headerName: ID
+                              field: _id._oid
+                              flex: 3
+                              filter: false
+                            - headerName: Book Name
+                              field: book
+                              flex: 2
+                              filter: false
+                            - headerName: Description
+                              field: desc
+                              flex: 8
+                              filter: false
+                            - headerName: Field
+                              field: field
+                              flex: 2.5
+                              filter: false
+                            - headerName: Status
+                              field: status
+                              flex: 2
+                              filter: false
+                            - headerName: Priority
+                              field: priority
+                              flex: 2
+                              filter: false
+              panel2:
+                blocks:
+                  - id: source_record_wrapper
+                    type: Box
+                    layout:
+                      contentGutter: 20
+                    blocks:
+                      - id: BT_level_selector
+                        type: Selector
+                        layout:
+                          span: 4
+                        properties:
+                          label:
+                            disabled: true
+                          options:
+                            - label: lv1
+                              value: 1
+                            - label: lv2
+                              value: 2
+                            - label: lv3
+                              value: 3
+                            - label: lv4
+                              value: 4
+                            - label: lv5
+                              value: 5
+                            - label: lv6
+                              value: 6
+                          placeholder: Select a BT level
+                      - id: BT_table
+                        type: AgGridBalham
+                        layout:
+                          span: 6
+                        properties:
+                          enableCellTextSelection: true
+                          pagination: true
+                          rowData:
+                            _request: get_BT_entries
+                          defaultColDef:
+                            sortable: true
+                            resizable: true
+                            filter: true
+                          columnDefs:
+                            - headerName: Date
+                              field: date
+                              flex: 2
+                              filter: false
+                            - headerName: BT Score
+                              field: bt_score
+                              flex: 1
+
+

@@ -1,0 +1,42 @@
+id: '404'
+type: PageHeaderMenu
+
+properties:
+  title: Page Not Found
+
+layout:
+  contentAlign: center
+  contentJustify: center
+
+blocks:
+  - id: error_card
+    type: Card
+    layout:
+      size: 600
+      contentGutter: 24
+    blocks:
+      - id: not_found_title
+        type: Title
+        properties:
+          content: "404 - 页面未找到"
+          level: 2
+          align: center
+
+      - id: not_found_text
+        type: Paragraph
+        properties:
+          content: "很抱歉，您访问的页面不存在。"
+          align: center
+
+      - id: back_home_button
+        type: Button
+        properties:
+          text: "返回首页"
+          icon: AiOutlineHome
+          color: red
+        events:
+          onClick:
+            - id: go_home
+              type: Link
+              params:
+                pageId: home  # 替换为你的首页 pageId

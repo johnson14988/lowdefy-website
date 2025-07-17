@@ -1,0 +1,516 @@
+id: new_entry
+type: PageHeaderMenu
+properties:
+  title: New Entry
+layout:
+  contentJustify: center
+
+blocks:
+  - id: content_card
+    type: Card
+    layout:
+      contentGutter: 16
+      span: 18
+    blocks:
+      - id: page_heading
+        type: Title
+        properties:
+          content: New Entry
+          level: 3
+
+      - id: button_wrapper
+        type: Box
+        layout:
+          span: 12
+          contentGutter: 24
+
+        blocks:
+          - id: submit_button
+            type: Button
+            layout:
+              span: 8
+            properties:
+              title: Submit
+              block: true
+              type: primary # Make the button a primary button with color
+              icon: SaveOutlined
+            events:
+              onClick:
+                - id: validate
+                  type: Validate
+
+          - id: default_button
+            type: Button
+            layout:
+              span: 8
+            properties:
+              title: Set Default
+              block: true
+            events:
+              onClick:
+                - id: validate
+                  type: Validate
+
+          - id: reset_button
+            type: Button
+            layout:
+              span: 8
+            properties:
+              title: Reset
+              block: true
+              type: default
+              icon: ClearOutlined
+            events:
+              onClick:
+                - id: reset
+                  type: Reset
+
+      - id: divider1
+        type: Divider
+
+      - id: inline_props
+        type: Box
+        layout:
+          span: 16
+          contentGutter: 16
+        blocks:
+          - id: wrapper1
+            type: Box
+            blocks:
+
+              - id: title
+                type: AutoComplete
+                properties:
+                  title: <h3>Title</h3>
+                  options:
+                    - Test
+                    - Default
+                  backfill: true
+                required: true
+                layout:
+                  span: 6
+
+              - id: schema
+                type: Selector
+                properties:
+                  title: <h3>Schema</h3>
+                  options:
+                    - "code"
+                    - "book review"
+                  backfill: true
+                required: true
+                layout:
+                  span: 6
+
+              - id: compiler
+                type: AutoComplete
+                properties:
+                  title: <h3>Compiler</h3>
+                  options:
+                    - HJH
+                    - GPT
+                    - Unknown
+                  backfill: true
+                required: true
+                layout:
+                  span: 6
+
+              - id: version
+                type: AutoComplete
+                properties:
+                  title: <h3>Version</h3>
+                  options:
+                    - v0
+                    - v1
+                    - v2
+                    - beta
+                  backfill: true
+                layout:
+                  span: 6
+
+          - id: summary
+            type: TextArea
+            properties:
+              title: <h3>Summary</h3>
+              allowClear: true
+              autoSize: true
+              label:
+              hasFeedback: false
+            layout:
+              span: 24
+
+          - id: date_wrapper
+            type: Box
+            blocks:
+
+              - id: add_date
+                type: DateSelector
+                required: true
+                layout:
+                  span: 12
+                properties:
+                  title: <h3>Add Date</h3>
+                  disabledDates:
+                    min:
+                      ~d: 2025-07-15T00:00:00.000Z
+                    max:
+                      _date.now: true
+                    dates: []
+                    ranges: []
+
+              - id: update_date
+                type: DateSelector
+                required: true
+                layout:
+                  span: 12
+                properties:
+                  title: <h3>Update Date</h3>
+                  disabledDates:
+                    min:
+                      ~d: 2025-07-15T00:00:00.000Z
+                    max:
+                      _date.now: true
+                    dates: []
+                    ranges: []
+
+          - id: rating_wrapper
+            type: Box
+            blocks:
+              - id: priority_wrapper
+                type: Box
+                layout:
+                  span: 9
+                  contentJustify: center
+                blocks:
+                  - id: priority
+                    type: RatingSlider
+                    required: true
+                    layout:
+                      span: 18
+                    properties:
+                      color: "#5dfda6"
+                      disableIcons: true
+                      disableNotApplicable: true
+                      min: 1
+                      max: 3
+                      title: <h3>Priority</h3>
+
+              - id: BT_level_wrapper
+                type: Box
+                layout:
+                  span: 15
+                  contentJustify: center
+                blocks:
+                  - id: BT_level
+                    type: RatingSlider
+                    required: true
+                    layout:
+                      span: 18
+                    properties:
+                      color: "#5dfda6"
+                      disableIcons: true
+                      disableNotApplicable: true
+                      min: 1
+                      max: 6
+                      title: <h3>BT Level</h3>
+
+              - id: input_preview
+                layout:
+                  span: 18
+                type: Markdown
+                properties:
+                  content:
+                    _string.concat:
+                      - "### Preview\n"
+                      - "```json\n"
+                      - _json.stringify:
+                          on:
+                            _state: true
+                      - "\n```"
+
+      - id: array_props
+        type: Collapse
+        layout:
+          span: 8
+        properties:
+          accordion: true
+          panels:
+            - key: panel1
+              title: <h3>Identifiers</h3>
+              disabled: false
+            - key: panel2
+              title: <h3>References</h3>
+              disabled: false
+            - key: panel3
+              disabled: false
+              title: <h3>Keywords</h3>
+            - key: panel4
+              disabled: false
+              title: <h3>Fields</h3>
+            - key: panel5
+              disabled: false
+              title: <h3>Prerequisites</h3>
+            - key: panel6
+              disabled: false
+              title: <h3>Adjacents</h3>
+            - key: panel7
+              disabled: false
+              title: <h3>Comparisons</h3>
+            - key: panel8
+              disabled: false
+              title: <h3>Derivations</h3>
+            - key: panel9
+              disabled: false
+              title: <h3>Categories</h3>
+        areas:
+          panel1:
+            blocks:
+              - id: identifiers
+                type: ControlledList
+                properties:
+                  addItemButton:
+                    title: add
+                    type: link
+                required: true
+                blocks:
+                  - id: identifiers.$
+                    type: Box
+                    blocks:
+                      - id: identifiers.$.index
+                        type: Paragraph
+                        layout:
+                          span: 2
+                        properties:
+                          content:
+                            _index: 0
+                      - id: identifiers.$.input
+                        type: TextInput
+                        layout:
+                          span: 22
+                        properties:
+                          label:
+                            disabled: true
+          panel2:
+            blocks:
+              - id: references
+                type: ControlledList
+                properties:
+                  addItemButton:
+                    title: add
+                    type: link
+                blocks:
+                  - id: references.$
+                    type: Box
+                    blocks:
+                      - id: references.$.index
+                        type: Paragraph
+                        layout:
+                          span: 2
+                        properties:
+                          content:
+                            _index: 0
+                      - id: references.$.input
+                        type: AutoComplete
+                        layout:
+                          span: 22
+                        properties:
+                          label:
+                            disabled: true
+                          options:
+                            - Wiki
+                            - GPT
+                            - Unknown
+                            - Others
+          panel3:
+            blocks:
+              - id: keywords
+                type: ControlledList
+                properties:
+                  addItemButton:
+                    title: add
+                    type: link
+                blocks:
+                  - id: keywords.$
+                    type: Box
+                    blocks:
+                      - id: keywords.$.index
+                        type: Paragraph
+                        layout:
+                          span: 2
+                        properties:
+                          content:
+                            _index: 0
+                      - id: keywords.$.input
+                        type: TextInput
+                        layout:
+                          span: 22
+                        properties:
+                          label:
+                            disabled: true
+          panel4:
+            blocks:
+              - id: fields
+                type: ControlledList
+                properties:
+                  addItemButton:
+                    title: add
+                    type: link
+                blocks:
+                  - id: fields.$
+                    type: Box
+                    blocks:
+                      - id: fields.$.index
+                        type: Paragraph
+                        layout:
+                          span: 2
+                        properties:
+                          content:
+                            _index: 0
+                      - id: fields.$.input
+                        type: AutoComplete
+                        layout:
+                          span: 22
+                        properties:
+                          label:
+                            disabled: true
+                          options:
+                            - maths
+                            - physics
+          panel5:
+            blocks:
+              - id: prerequisites
+                type: ControlledList
+                properties:
+                  addItemButton:
+                    title: add
+                    type: link
+                required: true
+                blocks:
+                  - id: prerequisites.$
+                    type: Box
+                    blocks:
+                      - id: prerequisites.$.index
+                        type: Paragraph
+                        layout:
+                          span: 2
+                        properties:
+                          content:
+                            _index: 0
+                      - id: prerequisites.$.input
+                        type: TextInput
+                        layout:
+                          span: 22
+                        properties:
+                          label:
+                            disabled: true
+          panel6:
+            blocks:
+              - id: adjacents
+                type: ControlledList
+                properties:
+                  addItemButton:
+                    title: add
+                    type: link
+                required: true
+                blocks:
+                  - id: adjacents.$
+                    type: Box
+                    blocks:
+                      - id: adjacents.$.index
+                        type: Paragraph
+                        layout:
+                          span: 2
+                        properties:
+                          content:
+                            _index: 0
+                      - id: adjacents.$.input
+                        type: TextInput
+                        layout:
+                          span: 22
+                        properties:
+                          label:
+                            disabled: true
+          panel7:
+            blocks:
+              - id: comparisons
+                type: ControlledList
+                properties:
+                  addItemButton:
+                    title: add
+                    type: link
+                required: true
+                blocks:
+                  - id: comparisons.$
+                    type: Box
+                    blocks:
+                      - id: comparisons.$.index
+                        type: Paragraph
+                        layout:
+                          span: 2
+                        properties:
+                          content:
+                            _index: 0
+                      - id: comparisons.$.input
+                        type: TextInput
+                        layout:
+                          span: 22
+                        properties:
+                          label:
+                            disabled: true
+          panel8:
+            blocks:
+              - id: derivations
+                type: ControlledList
+                properties:
+                  addItemButton:
+                    title: add
+                    type: link
+                required: true
+                blocks:
+                  - id: derivations.$
+                    type: Box
+                    blocks:
+                      - id: derivations.$.index
+                        type: Paragraph
+                        layout:
+                          span: 2
+                        properties:
+                          content:
+                            _index: 0
+                      - id: derivations.$.input
+                        type: TextInput
+                        layout:
+                          span: 22
+                        properties:
+                          label:
+                            disabled: true
+          panel9:
+            blocks:
+              - id: categories
+                type: ControlledList
+                properties:
+                  addItemButton:
+                    title: add
+                    type: link
+                required: true
+                blocks:
+                  - id: categories.$
+                    type: Box
+                    blocks:
+                      - id: categories.$.index
+                        type: Paragraph
+                        layout:
+                          span: 2
+                        properties:
+                          content:
+                            _index: 0
+                      - id: categories.$.input
+                        type: TextInput
+                        layout:
+                          span: 22
+                        properties:
+                          label:
+                            disabled: true
+
+
+
