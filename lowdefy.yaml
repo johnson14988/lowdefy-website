@@ -3,35 +3,7 @@ lowdefy: 4.4.0
 name: Lowdefy starter
 
 connections:
-  - _ref:
-      path: connections/mongo_connections.yaml
-      vars:
-        id: source_wiki
-        databaseName: source
-        collection: wiki
-  - _ref:
-      path: connections/mongo_connections.yaml
-      vars:
-        id: source_textbook
-        databaseName: source
-        collection: textbook
-  - _ref:
-      path: connections/mongo_connections.yaml
-      vars:
-        id: record_task
-        databaseName: record
-        collection: task
-  - _ref:
-      path: connections/mongo_connections.yaml
-      vars:
-        id: testBT_test1
-        databaseName: testBT
-        collection: test1
-
-  - id: my_api
-    type: AxiosHttp
-    properties:
-      baseURL: https://radiant-cove-14954-a1ca9b8d8036.herokuapp.com
+  _ref: connections/main_connections.yaml
 
 menus:
   - id: default
@@ -42,18 +14,6 @@ menus:
           icon: AiOutlineHome
           title: Home
         pageId: home
-      - id: mongo
-        type: MenuLink
-        properties:
-          icon: AiOutlineExperiment
-          title: Mongo
-        pageId: mongo
-      - id: test
-        type: MenuLink
-        properties:
-          icon: AiOutlineExperiment
-          title: Test Page
-        pageId: test
       - id: dashboard
         type: MenuLink
         properties:
@@ -68,12 +28,10 @@ menus:
         pageId: new_entry
 
 pages:
-  - _ref: home.yaml
-  - _ref: new_entry.yaml
-  - _ref: dashboard.yaml
-  - _ref: mongo.yaml
-  - _ref: test.yaml
-  - _ref: page404.yaml
+  - _ref: pages/home.yaml
+  - _ref: pages/new_entry.yaml
+  - _ref: pages/dashboard.yaml
+  - _ref: pages/page404.yaml
 
 
 

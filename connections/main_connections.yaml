@@ -1,0 +1,29 @@
+- _ref:
+    path: components/connection.yaml
+    vars:
+      id: source_wiki
+      databaseName: source
+      collection: wiki
+- _ref:
+    path: components/connection.yaml
+    vars:
+      id: source_book
+      databaseName: source
+      collection: textbook
+- _ref:
+    path: components/connection.yaml
+    vars:
+      id: record_task
+      databaseName: record
+      collection: task
+- _ref:
+    path: components/connection.yaml
+    vars:
+      id: testBT_test1
+      databaseName: testBT
+      collection: test1
+
+- id: my_api
+  type: AxiosHttp
+  properties:
+    baseURL: https://radiant-cove-14954-a1ca9b8d8036.herokuapp.com

@@ -15,5 +15,12 @@ areas:
   content:
     justify: center
     blocks:
-      - id: content_card
+      - id: home_card
         type: Card
+        areas:
+          content:
+            blocks:
+              - id: p1
+                type: Paragraph
+                properties:
+                  content: <h1>Welcome to my website !</h1>

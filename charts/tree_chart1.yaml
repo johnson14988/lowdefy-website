@@ -30,8 +30,8 @@ blocks:
                       - name: linear algebra
                   - name: topology
                     children:
-                      - general topology
-                      - differential topology
+                      - name: general topology
+                      - name: differential topology
             top: 10%
             left: 20%
             bottom: 10%

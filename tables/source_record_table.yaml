@@ -1,0 +1,45 @@
+id:
+  _var: table_id
+type: AgGridBalham
+properties:
+  enableCellTextSelection: true
+  pagination: true
+  rowData:
+    _switch:
+      branches:
+        - if:
+            _eq:
+              - _var: query_source
+              - Textbook
+          then:
+            _request: get_books
+    _request: get_books
+  defaultColDef:
+    sortable: true
+    resizable: true
+    filter: true
+  columnDefs:
+    - headerName: ID
+      field: _id._oid
+      flex: 3
+      filter: false
+    - headerName: Book Name
+      field: book
+      flex: 2
+      filter: false
+    - headerName: Description
+      field: desc
+      flex: 8
+      filter: false
+    - headerName: Field
+      field: field
+      flex: 2.5
+      filter: false
+    - headerName: Status
+      field: status
+      flex: 2
+      filter: false
+    - headerName: Priority
+      field: priority
+      flex: 2
+      filter: false

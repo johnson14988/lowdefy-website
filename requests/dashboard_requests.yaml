@@ -1,0 +1,48 @@
+- id: get_book
+  type: MongoDBFind
+  connectionId: source_book
+  properties:
+    query: {}
+    projection:
+      _id: 0
+      book: 1
+      desc: 1
+      field: 1
+      status: 1
+      priority: 1
+
+- id: get_wiki
+  type: MongoDBFind
+  connectionId: source_wiki
+  properties:
+    query: {}
+    projection:
+      _id: 0
+      page: 1
+      status: 1
+      field: 1
+
+- id: get_task
+  type: MongoDBFind
+  connectionId: record_task
+  properties:
+    query: {}
+    projection:
+      _id: 0
+      task: 1
+      desc: 1
+      priority: 1
+
+- id: get_BT_entries
+  type: MongoDBFind
+  connectionId: testBT_test1
+  properties:
+    query: {}
+    projection:
+      _id: 0
+
+- id: get_tree
+  type: AxiosHttp
+  connectionId: my_api
+  properties:
+    url: /math_tree

@@ -4,32 +4,25 @@ properties:
   title: Dashboard
 
 requests:
-  - id: get_tasks
-    type: MongoDBFind
-    connectionId: record_task
-    properties:
-      query: {}
-      projection:
-        _id: 0
-        task: 1
-        desc: 1
-        priority: 1
-  - id: get_BT_entries
-    type: MongoDBFind
-    connectionId: testBT_test1
-    properties:
-      query: {}
-      projection:
-        _id: 0
+  _ref: requests/dashboard_requests.yaml
 
 events:
   onMount:
-    - id: get_tasks
+    - id: get_book
       type: Request
-      params: get_tasks
+      params: get_book
+    - id: get_wiki
+      type: Request
+      params: get_wiki
+    - id: get_task
+      type: Request
+      params: get_task
     - id: get_BT_entries
       type: Request
       params: get_BT_entries
+    - id: get_tree
+      type: Request
+      params: get_tree
 
 blocks:
   - id: default
@@ -54,9 +47,6 @@ blocks:
         - key: chart_tab
           title: Charts
           icon: AiFillCamera
-        - key: task_tab
-          title: Tasks
-          icon: AiFillBell
         - key: memo_tab
           title: Memos
           icon: AiFillBell
@@ -75,7 +65,7 @@ blocks:
               contentJustify: center
             blocks:
               - _ref:
-                  path: date_selector.yaml
+                  path: components/date_selector.yaml
                   vars:
                     id: score_date
 
@@ -92,53 +82,45 @@ blocks:
           - id: divider1
             type: Divider
 
-          - id: row2
-            type: Box
-            blocks:
-              - _ref: charts/tree_chart1.yaml
-
-          - id: row3
-            type: Box
-            blocks:
-              - _ref: charts/tree_chart2.yaml
-
-      task_tab:
-        blocks:
-          - id: task_wrapper
-            type: Box
-            layout:
-              contentGutter: 20
-            blocks:
-              - id: task_card1
-                type: Card
-                properties:
-                  hoverable: true
-                  title: View Tasks
+          - id: field_classes
+            type: Collapse
+            properties:
+              accordion: true
+              panels:
+                - key: panel1
+                  extraKey: panel1Extra
+                  title: <h3>Maths Classification</h3>
+                  disabled: false
+                - key: panel2
+                  title: <h3>Physics Classification</h3>
+                  disabled: false
+                  extraKey: null
+                - key: panel3
+                  disabled: false
+                  title: <h3>Computer Science Classification</h3>
+                  extraKey: null
+            areas:
+              panel1:
                 blocks:
-                  - id: task_table1
-                    type: AgGridBalham
-                    properties:
-                      enableCellTextSelection: true
-                      pagination: true
-                      rowData:
-                        _request: get_tasks
-                      defaultColDef:
-                        sortable: true
-                        resizable: true
-                        filter: true
-                      columnDefs:
-                        - headerName: Task
-                          field: task
-                          flex: 1
-                          filter: false
-                        - headerName: Description
-                          field: desc
-                          flex: 2
-                          filter: false
-                        - headerName: Priority
-                          field: priority
-                          flex: 1
-                          filter: false
+                  - _ref:
+                      path: charts/field_tree_chart.yaml
+                      vars:
+                        id: maths_class_tree
+                        field: maths
+              panel2:
+                blocks:
+                  - _ref:
+                      path: charts/field_tree_chart.yaml
+                      vars:
+                        id: physics_class_tree
+                        field: physics
+              panel3:
+                blocks:
+                  - _ref:
+                      path: charts/field_tree_chart.yaml
+                      vars:
+                        id: computer_class_tree
+                        field: computer
 
       memo_tab:
         blocks:
@@ -159,6 +141,7 @@ blocks:
                     type: Markdown
                     properties:
                       content: "**This is a markdown text.**"
+
               - id: memo_card2
                 type: Card
                 properties:
@@ -171,6 +154,7 @@ blocks:
                     type: Markdown
                     properties:
                       content: "**This is another markdown text.**"
+
       record_tab:
         blocks:
           - id: block_id
@@ -188,6 +172,7 @@ blocks:
                   title: BT Entries
                   disabled: false
                   extraKey: panel2Extra
+
             areas:
               panel1:
                 blocks:
@@ -205,9 +190,9 @@ blocks:
                             disabled: true
                           options:
                             - label: Textbook
-                              value: Textbook
+                              value: book
                             - label: Wikipage
-                              value: Wikipage
+                              value: wiki
                           placeholder: Select a source to view
                         events:
                           onChange:
@@ -220,7 +205,7 @@ blocks:
                       - id: query_button
                         type: Button
                         layout:
-                          span: 3
+                          span: 2
                         properties:
                           color: "#ca7af0"
                           shape: round
@@ -228,45 +213,46 @@ blocks:
                             _string.concat:
                               - "Query: "
                               - _state: source
+                        events:
+                          onClick:
+                            - id: set_source
+                              type: SetState
+                              params:
+                                _state.query_source:
+                                  _state: source_selector
 
-
-
-                      - id: souce_table
-                        type: AgGridBalham
+                      - id: generate_csv
+                        type: Button
+                        layout:
+                          span: 4
                         properties:
-                          enableCellTextSelection: true
-                          pagination: true
-                          rowData:
-                            _request: get_books
-                          defaultColDef:
-                            sortable: true
-                            resizable: true
-                            filter: true
-                          columnDefs:
-                            - headerName: ID
-                              field: _id._oid
-                              flex: 3
-                              filter: false
-                            - headerName: Book Name
-                              field: book
-                              flex: 2
-                              filter: false
-                            - headerName: Description
-                              field: desc
-                              flex: 8
-                              filter: false
-                            - headerName: Field
-                              field: field
-                              flex: 2.5
-                              filter: false
-                            - headerName: Status
-                              field: status
-                              flex: 2
-                              filter: false
-                            - headerName: Priority
-                              field: priority
-                              flex: 2
-                              filter: false
+                          shape: round
+                          title: Generate a CSV
+                          color: '#1890ff'
+                        events:
+                          onClick:
+                            - id: fetch_data
+                              type: Request
+                              params:
+                                - get_task
+                            - id: generate_csv
+                              type: DownloadCsv
+                              params:
+                                filename: profiles.csv
+                                data:
+                                  _request: get_task
+                                fields:
+                                  - task
+                                  - desc
+                                  - priority
+
+                      - _ref:
+                          path: tables/source_record_table.yaml
+                          vars:
+                            table_id: source_record_table
+
+
+
               panel2:
                 blocks:
                   - id: source_record_wrapper
@@ -295,6 +281,7 @@ blocks:
                             - label: lv6
                               value: 6
                           placeholder: Select a BT level
+
                       - id: BT_table
                         type: AgGridBalham
                         layout:
@@ -316,5 +303,3 @@ blocks:
                             - headerName: BT Score
                               field: bt_score
                               flex: 1
-
-

@@ -1,0 +1,22 @@
+_switch:
+  branches:
+    - if:
+        _eq:
+          - _var: field
+          - maths
+      then:
+        _json.parse: '{"name":"mathematics","children":[{"name":"analysis","children":[{"name":"real analysis"},{"name":"complex analysis"},{"name":"harmonic analysis"},{"name":"functional analysis"}]},{"name":"algebra","children":[{"name":"abstract algebra"},{"name":"linear algebra"}]},{"name":"topology","children":[{"name":"general topology"},{"name":"differential topology"}]}]}'
+    - if:
+        _eq:
+          - _var: field
+          - physics
+      then:
+        _json.parse: '{"name":"physics","children":[{"name":"analysis","children":[{"name":"real analysis"},{"name":"complex analysis"},{"name":"harmonic analysis"},{"name":"functional analysis"}]},{"name":"algebra","children":[{"name":"abstract algebra"},{"name":"linear algebra"}]},{"name":"topology","children":[{"name":"general topology"},{"name":"differential topology"}]}]}'
+    - if:
+        _eq:
+          - _var: field
+          - computer
+      then:
+        _json.parse: '{"name":"computer","children":[{"name":"analysis","children":[{"name":"real analysis"},{"name":"complex analysis"},{"name":"harmonic analysis"},{"name":"functional analysis"}]},{"name":"algebra","children":[{"name":"abstract algebra"},{"name":"linear algebra"}]},{"name":"topology","children":[{"name":"general topology"},{"name":"differential topology"}]}]}'
+  default: null
+

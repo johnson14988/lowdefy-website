@@ -1,12 +1,10 @@
-id: tree_chart_card2
-type: Card
-properties:
-  hoverable: true
-  title: A Tree Chart
+id:
+  _var: id
+type: Box
 layout:
   span: 24
 blocks:
-  - id: tree_chart2
+  - id: physics_tree
     type: EChart
     properties:
       option:
@@ -16,7 +14,11 @@ blocks:
         series:
           - type: tree
             data:
-              - _json.parse: '{"name":"mathematics","children":[{"name":"analysis","children":[{"name":"real analysis"},{"name":"complex analysis"},{"name":"harmonic analysis"},{"name":"functional analysis"}]},{"name":"algebra","children":[{"name":"abstract algebra"},{"name":"linear algebra"}]},{"name":"topology","children":[{"name":"general topology"},{"name":"differential topology"}]}]}'
+              - _ref:
+                  path: test_tree.yaml
+                  vars:
+                    field:
+                      _var: field
             top: 10%
             left: 20%
             bottom: 10%
